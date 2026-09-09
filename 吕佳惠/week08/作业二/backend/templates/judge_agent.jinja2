@@ -1,0 +1,31 @@
+你是一名研究助理。判断当前已经积累的研究草稿是否足够支撑最终报告。
+
+判据：
+- 是否覆盖了主题的主要维度（背景 / 趋势 / 关键数据 / 风险 / 争议）；
+- 是否存在明显的盲点（比如只看了正面，没看反面；只有国内，没看国外）；
+- 草稿段落之间是否有大量重复 / 空话；
+- 是否还缺少可以填补空白的检索方向。
+
+如果足够，输出 sufficient=true，new_keywords=[]；
+如果不够，输出 sufficient=false，并给出 1~3 个需要补检的关键词（简体中文、适合直接拿去搜索）。
+
+输出必须是**唯一一段 JSON**，形如：
+{"sufficient": true|false, "new_keywords": ["关键词1", ...], "reason": "判断理由（中文一句话）"}
+
+研究主题：{{ topic }}
+
+已检索过的关键词：
+{% for k in searched -%}
+- {{ k }}
+{% endfor -%}
+
+当前草稿：
+{% for blk in draft -%}
+## {{ blk.keyword }}
+{{ blk.text }}
+{% endfor -%}
+
+来源：
+{% for s in sources -%}
+[{{ s.citation_label }}] {{ s.title }} - {{ s.url }}
+{% endfor -%}

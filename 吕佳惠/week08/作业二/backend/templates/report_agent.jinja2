@@ -1,0 +1,30 @@
+你是一名资深研究分析师。基于已收集到的研究草稿和来源，输出最终研究报告的**元信息 JSON**。
+
+要求：
+- title：不超过 30 字，准确概括研究主题；
+- summary：150~250 字，概述主要发现；
+- key_conclusions：3~6 条，每条一句话、聚焦结论而非过程；
+- open_questions：1~4 条，研究尚未解决、需要进一步验证的问题。
+
+输出必须是**唯一一段 JSON**，形如：
+{
+  "title": "...",
+  "summary": "...",
+  "key_conclusions": ["...", "..."],
+  "open_questions": ["...", "..."]
+}
+
+研究主题：{{ topic }}
+
+研究草稿：
+{% for blk in draft -%}
+## {{ blk.keyword }}
+{{ blk.text }}
+{% endfor -%}
+
+来源：
+{% for s in sources -%}
+[{{ s.citation_label }}] {{ s.title }} - {{ s.url }}
+{% endfor -%}
+
+补充说明（置信度上下文）：{{ confidence_hint }}

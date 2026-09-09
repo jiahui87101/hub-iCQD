@@ -1,0 +1,33 @@
+你是一名 HTML 排版工程师。把下面的研究报告渲染成**完整自包含的 HTML 文档**（不依赖外部 CSS/JS，样式内嵌）。
+
+要求：
+- 单文件 HTML，开头 <!DOCTYPE html>，含 <html><head><meta charset="utf-8"><title>...</title><style>...</style></head><body>...</body></html>；
+- 排版简洁专业：标题、正文、引用、来源列表分区清晰；
+- 关键结论用 <ul>，遗留问题用 <ul>，来源列表用 <ol>；
+- 来源以 {{ sources | tojson(ensure_ascii=False) }} 提供；
+- 直接输出 HTML 原文，不要任何解释、不要 ```html``` 包裹。
+
+报告主题：{{ title }}
+
+摘要：{{ summary }}
+
+分节正文：
+{% for sec in sections -%}
+## {{ sec.heading }}
+{{ sec.body }}
+{% endfor -%}
+
+关键结论：
+{% for c in key_conclusions -%}
+- {{ c }}
+{% endfor -%}
+
+遗留问题：
+{% for q in open_questions -%}
+- {{ q }}
+{% endfor -%}
+
+来源（JSON 数组）：{{ sources | tojson(ensure_ascii=False) }}
+
+置信度等级：{{ confidence_level }}
+信息截止：{{ cutoff_note }}
